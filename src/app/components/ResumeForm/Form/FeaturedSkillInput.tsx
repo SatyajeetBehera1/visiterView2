@@ -57,7 +57,7 @@ const CircleRating = ({
           onMouseLeave={() => setHoverRating(null)}
         >
           <div
-            className="h-5 w-5 rounded-full transition-transform duration-200 hover:scale-[120%] "
+            className="h-4 w-4 md:h-5 md:w-5 rounded-full transition-transform duration-200 hover:scale-[120%] "
             style={{
               backgroundColor:
                 (hoverRating !== null && hoverRating >= idx) ||

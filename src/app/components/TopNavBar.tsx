@@ -2,12 +2,11 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import logoSrc from "../../../logo.png";
-// import logoSrc from "public/logo.png";
-import React from "react";
+import logoSrc from "public/logo.png";
+import React, { useState } from "react";
 import { useButtonContext } from "./ButtonContext";
 
-const NavbarMain: React.FC = () => {
+const NavbarMain: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const { activeButton, setActiveButton } = useButtonContext();
 
   const buttons = ["ABOUT YOU", "PROJECT", "WORK EXPERIENCE", "EDUCATION", "SKILLS", "CUSTOM"];
@@ -17,7 +16,11 @@ const NavbarMain: React.FC = () => {
   };
 
   return (
-    <nav className="p-4 flex items-center justify-center space-x-6 text-sm">
+    <nav
+      className={`p-4 flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 ${
+        isOpen ? 'block' : 'hidden md:block'
+      }`}
+    >
       {buttons.map((buttonText) => (
         <button
           key={buttonText}
@@ -36,21 +39,32 @@ const NavbarMain: React.FC = () => {
 const TopNavBar: React.FC = () => {
   const pathName = usePathname();
   const isHomePage = pathName === "/";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
     <header
       aria-label="Site Header"
-      className={`flex h-[var(--top-nav-bar-height)] items-center border-b-2 border-gray-100 px-3 lg:px-12 ${
+      className={`flex flex-col md:h-[var(--top-nav-bar-height)] md:flex-row items-center border-b-2 border-gray-100 px-3 lg:px-12 ${
         isHomePage ? "bg-dot" : ""
       }`}
     >
-      <div className="flex h-10 w-full items-center">
-        <Link href="/">
-          <Image src={logoSrc} alt="NovaZen" className="h-8 w-full" />
-        </Link>
-        <nav aria-label="Site Nav Bar" className="flex items-center text-sm font-medium space-x-0 justify-start">
-          <NavbarMain />
-        </nav>
+      <div className="flex flex-col md:flex-row w-full">
+        <div className="flex justify-between items-center mb-4 md:mb-0">
+          <Link href="/">
+            <Image src={logoSrc} alt="NovaZen" className="h-10 w-auto" />
+          </Link>
+          <button
+            className="md:hidden text-2xl font-bold"
+            onClick={handleMenuToggle}
+          >
+            {isMenuOpen ? '✖' : '☰'}
+          </button>
+        </div>
+        <NavbarMain isOpen={isMenuOpen} />
       </div>
     </header>
   );
