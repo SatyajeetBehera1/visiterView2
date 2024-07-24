@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import logoSrc from "public/logo.png";
+import logoSrc from "../../../logo.png";
 import React, { useState } from "react";
 import { useButtonContext } from "./ButtonContext";
 
