@@ -1,3 +1,4 @@
+'use client';
 import "globals.css";
 import TopNavBar from "components/TopNavBar";
 import { ButtonProvider } from "components/ButtonContext";
